@@ -1,6 +1,6 @@
 # Teste Desenvolvedor PHP Laravel
 
-Uma breve descrição do seu projeto e suas funcionalidades.
+
 
 ## Índice
 
