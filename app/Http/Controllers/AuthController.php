@@ -15,15 +15,15 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        // Valida os dados recebidos
+
         $credentials = $request->only('email', 'password');
 
-        // Tenta gerar o token JWT
+
         if (!$token = JWTAuth::attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        // Retorna o token se a autenticação for bem-sucedida
+
         return response()->json(['token' => $token]);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Empresa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EmpresaController extends Controller
 {
@@ -14,11 +14,22 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        return response()->json(Empresa::all(), 200);
+        $empresas = DB::table('empresas')->get();
+        return response()->json($empresas, 200);
     }
 
-    public function show(Empresa $empresa)
+    /**
+     * Display the specified empresa.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($id)
     {
+        $empresa = DB::table('empresas')->where('id', $id)->first();
+        if (!$empresa) {
+            return response()->json(['message' => 'Empresa não encontrada'], 404);
+        }
         return response()->json($empresa, 200);
     }
 
@@ -34,8 +45,13 @@ class EmpresaController extends Controller
             'nome' => 'required|string|max:255',
         ]);
 
-        $empresa = Empresa::create($request->only('nome'));
+        $id = DB::table('empresas')->insertGetId([
+            'nome' => $request->input('nome'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
+        $empresa = DB::table('empresas')->where('id', $id)->first();
         return response()->json($empresa, 201);
     }
 
@@ -43,29 +59,43 @@ class EmpresaController extends Controller
      * Update the specified empresa in storage.
      *
      * @param Request $request
-     * @param Empresa $empresa
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Empresa $empresa)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'nome' => 'required|string|max:255',
         ]);
 
-        $empresa->update($request->only('nome'));
+        $empresa = DB::table('empresas')->where('id', $id);
 
-        return response()->json($empresa, 200);
+        if (!$empresa->exists()) {
+            return response()->json(['message' => 'Empresa não encontrada'], 404);
+        }
+
+        $empresa->update([
+            'nome' => $request->input('nome'),
+            'updated_at' => now(),
+        ]);
+
+        return response()->json(['message' => 'Empresa atualizada com sucesso'], 200);
     }
-
 
     /**
      * Remove the specified empresa from storage.
      *
-     * @param Empresa $empresa
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Empresa $empresa)
+    public function destroy($id)
     {
+        $empresa = DB::table('empresas')->where('id', $id);
+
+        if (!$empresa->exists()) {
+            return response()->json(['message' => 'Empresa não encontrada'], 404);
+        }
+
         $empresa->delete();
 
         return response()->json(['message' => 'Empresa excluída com sucesso'], 200);

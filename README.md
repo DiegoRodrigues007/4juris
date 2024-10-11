@@ -1,66 +1,101 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Teste Desenvolvedor PHP Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Uma breve descrição do seu projeto e suas funcionalidades.
 
-## About Laravel
+## Índice
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   [Pré-requisitos](#pré-requisitos)
+-   [Instalação](#instalação)
+-   [Configuração do Banco de Dados](#configuração-do-banco-de-dados)
+-   [Rodando o Projeto com XAMPP](#rodando-o-projeto-com-xampp)
+-   [Testes](#testes)
+-   [Tecnologias Usadas](#tecnologias-usadas)
+-   [Contribuição](#contribuição)
+-   [Licença](#licença)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Pré-requisitos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Antes de começar, verifique se você tem os seguintes pré-requisitos instalados em sua máquina:
 
-## Learning Laravel
+-   [XAMPP](https://www.apachefriends.org/index.html) (inclui PHP e MySQL)
+-   [Composer](https://getcomposer.org/download/) (para gerenciar dependências do PHP)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Instalação
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Siga os passos abaixo para instalar e configurar o projeto:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone o repositório:**
 
-## Laravel Sponsors
+    ```bash
+    git clone https://github.com/DiegoRodrigues007/4juris.git
+    cd 4juris
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. **Instale as dependências do PHP:**
 
-### Premium Partners
+    ```bash
+    composer install
+    ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Configuração do Banco de Dados
 
-## Contributing
+1. **Crie um banco de dados:**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    - Acesse o painel do XAMPP e inicie o Apache e o MySQL.
+    - Acesse o phpMyAdmin em `http://localhost/phpmyadmin` e crie um novo banco de dados:
 
-## Code of Conduct
+    ```sql
+    CREATE DATABASE nome_do_banco_de_dados;
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. **Configure o arquivo `.env`:**
 
-## Security Vulnerabilities
+    - Renomeie o arquivo `.env.example` para `.env`.
+    - Abra o arquivo `.env` e configure as credenciais do banco de dados:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```plaintext
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=nome_do_banco_de_dados
+    DB_USERNAME=root  # O padrão do XAMPP
+    DB_PASSWORD=      # Deixe vazio se não houver senha
+    ```
 
-## License
+3. **Gere a chave da aplicação:**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ```bash
+    php artisan key:generate
+    ```
+
+4. **Migre o banco de dados:**
+
+    - Execute as migrações para criar as tabelas necessárias:
+
+    ```bash
+    php artisan migrate
+    ```
+
+## Rodando o Projeto com XAMPP
+
+1. **Inicie o servidor de desenvolvimento:**
+
+    - Se você está usando o XAMPP, você não precisa do comando `php artisan serve`.
+    - Em vez disso, coloque o diretório do seu projeto na pasta `htdocs` do XAMPP (normalmente em `C:\xampp\htdocs`).
+    - Acesse o projeto no navegador em `http://localhost/nome-do-projeto/public`.
+
+## Testes
+
+Para executar os testes automatizados, use o seguinte comando:
+
+```bash
+php artisan test
+```
+
+## Tecnologias Usadas
+
+-   PHP 8.x
+-   Laravel
+-   MySQL (via XAMPP)
+-   JWT-Auth (Para autenticação)
+
